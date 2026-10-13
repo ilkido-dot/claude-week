@@ -14,11 +14,10 @@ while True:
 
     response = client.messages.create(
         model="claude-sonnet-5",
-        max_tokens=1000,
+        max_tokens=16000,
         messages=messages,
     )
 
     reply = response.content[0].text
     print("Claude:", reply)
-    print(response)
     messages.append({"role": "assistant", "content": reply})

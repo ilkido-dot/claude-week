@@ -17,7 +17,7 @@ tools = [
 
 response = client.messages.create(
     model="claude-sonnet-5",
-    max_tokens=1000,
+    max_tokens=16000,
     tools=tools,
     messages=[{"role": "user", "content": "台北天氣如何"}],
 )
@@ -30,5 +30,3 @@ for block in response.content:
     elif block.type == "tool_use":
         print("要用工具:", block.name)
         print("參數:", block.input)
-        
-print(response)        

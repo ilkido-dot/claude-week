@@ -4,7 +4,7 @@ client = anthropic.Anthropic()
 
 tools = [
     {
-        "name": "get_weather", "description": "工具",
+        "name": "get_weather", "description": "查詢某個城市現在的天氣",
         "input_schema":  {
             "type": "object",
             "properties": {
@@ -19,7 +19,7 @@ tools = [
 
 def get_weather(city):
     return f"{city}現在是晴天,28度"
-    
+
 
 messages = [
     {"role": "user", "content": "台北現在天氣如何"}
@@ -33,10 +33,10 @@ while True:
         print("超過10倫,強制停止")
         break
 
-    
+
     response = client.messages.create(
         model="claude-sonnet-5",
-        max_tokens=1000,
+        max_tokens=16000,
         tools=tools,
         messages=messages,
     )
@@ -54,7 +54,7 @@ while True:
             try:
                 output = get_weather(block.input["city"])
             except Exception as e:
-                output = f"工具執行失敗:{e}"    
+                output = f"工具執行失敗:{e}"
             results.append({
                 "type": "tool_result",
                 "tool_use_id": block.id,
@@ -66,9 +66,3 @@ while True:
 for block in response.content:
     if block.type == "text":
         print("最終回答:", block.text)
-for block in response.content:
-    if block.type == "thinking":
-        print("推理過程")
-        print(block.thinking)
-    
-        

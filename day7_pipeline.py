@@ -2,16 +2,18 @@ import anthropic
 
 client = anthropic.Anthropic()
 
-
+weather_table = {
+    "台北": "陰天,22度",
+    "台中": "晴天,30度",
+    "高雄": "雷陣雨,27度",
+    "台南": "晴天,31度",
+    "花蓮": "大雨,19度",
+}
 
 
 def get_weather(city):
-    return f"{city}現在是晴天,28度"
-    
+    return f"{city}現在是{weather_table[city]}"
 
-messages = [
-    {"role": "user", "content": "請依序查詢台北、台中、高雄、台南、花蓮的天氣,一次只查一個城市,最後告訴我哪裡最適合出遊。"}
-]
 
 cities = ["台北", "台中", "高雄", "台南", "花蓮"]
 
@@ -30,5 +32,3 @@ print("input_tokens:", response.usage.input_tokens, "output_tokens:", response.u
 for block in response.content:
     if block.type == "text":
         print("最終回答:", block.text)
-
-                
